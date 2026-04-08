@@ -36,66 +36,87 @@
     background: rgba(255,255,255,.93);
     backdrop-filter: blur(4px);
   }
-  h1 { margin: 0 0 8px; font-size: 1.8rem; letter-spacing: .02em; }
-  .subtitle { color: var(--muted); margin-bottom: 12px; font-weight: 600; }
-  .sync-note { margin-top: 8px; font-size: 13px; color: var(--muted); }
-  .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; }
+  h1 { margin: 0 0 4px; font-size: 1.6rem; letter-spacing: .02em; }
+  .subtitle { color: var(--muted); margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+  .sync-note { margin-top: 8px; font-size: 12px; color: var(--muted); }
+  
+  /* Filter Controls */
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; transition: max-height 0.3s ease-out, opacity 0.2s; overflow: hidden; }
+  .filter-toggle { display: none; width: 100%; margin-bottom: 10px; background: white; border: 1px solid var(--border); padding: 10px; border-radius: 12px; font-weight: 700; cursor: pointer; align-items: center; justify-content: center; gap: 8px; font-size: 14px; }
+  
   select, input, textarea { padding: 10px 12px; border: 1px solid #cfd4dc; border-radius: 12px; background: white; font-size: 14px; font-family: inherit; }
   textarea { min-height: 140px; resize: vertical; width: 100%; }
   .button { appearance: none; border: 0; border-radius: 12px; padding: 11px 14px; font-weight: 700; cursor: pointer; background: var(--lego-blue); color: white; box-shadow: 0 4px 10px rgba(0,0,0,.12); font-size: 14px; }
   .button:disabled { opacity: 0.6; cursor: not-allowed; }
   .button.alt { background: white; color: var(--text); border: 1px solid var(--border); }
-  .stats { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-  .pill { background: white; border: 1px solid var(--border); padding: 8px 12px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+  
+  .stats { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .pill { background: white; border: 1px solid var(--border); padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+  
   .layout { padding: 18px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
-  .card { background: var(--card-bg); border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); display: flex; flex-direction: column; min-height: 500px; transition: transform .18s ease, box-shadow .18s ease; cursor: pointer; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .card { background: var(--card-bg); border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); display: flex; flex-direction: column; min-height: 480px; transition: transform .18s ease, box-shadow .18s ease; cursor: pointer; }
   .card:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,.12); }
+  
   .image-wrap { position: relative; background: linear-gradient(180deg, #f8fafc, #eef2f7); aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; overflow: hidden; }
   .image-wrap img { width: 100%; height: 100%; object-fit: contain; padding: 14px; }
-  .theme-tag { position: absolute; top: 12px; left: 12px; color: white; font-size: 12px; font-weight: 700; padding: 7px 10px; border-radius: 999px; box-shadow: 0 2px 8px rgba(0,0,0,.18); }
-  .status-tag { position: absolute; top: 12px; right: 12px; color: #111827; font-size: 12px; font-weight: 700; padding: 7px 10px; border-radius: 999px; background: rgba(255,255,255,.93); }
-  .card-body { padding: 16px; border-top: 7px solid var(--lego-red); display: flex; flex-direction: column; gap: 10px; flex: 1; }
-  .title { font-size: 1.08rem; line-height: 1.35; font-weight: 700; min-height: 3.0em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .fact { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; }
-  .fact-label { display: block; color: var(--muted); font-size: 12px; margin-bottom: 3px; }
-  .fact-value { font-weight: 700; }
-  .notes { margin-top: auto; background: #fffdf3; border: 1px dashed #e8cf6a; border-radius: 12px; padding: 10px 12px; font-size: 13px; color: #6b5b1c; min-height: 72px; white-space: pre-wrap; }
-  .actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 4px; }
-  .button-link { color: var(--lego-blue); text-decoration: none; font-weight: 700; font-size: 14px; }
-  .hint { color: var(--muted); font-size: 13px; }
-  .empty { padding: 24px; text-align: center; color: var(--muted); }
+  .theme-tag { position: absolute; top: 10px; left: 10px; color: white; font-size: 11px; font-weight: 700; padding: 6px 9px; border-radius: 999px; box-shadow: 0 2px 8px rgba(0,0,0,.18); }
+  .status-tag { position: absolute; top: 10px; right: 10px; color: #111827; font-size: 11px; font-weight: 700; padding: 6px 9px; border-radius: 999px; background: rgba(255,255,255,.93); }
+  
+  .card-body { padding: 14px; border-top: 6px solid var(--lego-red); display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .title { font-size: 1rem; line-height: 1.3; font-weight: 700; min-height: 2.6em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .fact { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; }
+  .fact-label { display: block; color: var(--muted); font-size: 11px; margin-bottom: 2px; }
+  .fact-value { font-weight: 700; font-size: 13px; }
+  .notes { margin-top: auto; background: #fffdf3; border: 1px dashed #e8cf6a; border-radius: 10px; padding: 8px 10px; font-size: 12px; color: #6b5b1c; min-height: 60px; white-space: pre-wrap; }
+  .actions { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 4px; }
+  .button-link { color: var(--lego-blue); text-decoration: none; font-weight: 700; font-size: 13px; }
+  .hint { color: var(--muted); font-size: 12px; }
   
   /* Modal Styles */
-  .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 15px; }
   .modal-overlay.show { display: flex; }
-  .modal-content { background: white; border-radius: 24px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; }
-  .modal-header { padding: 20px; background: linear-gradient(90deg, var(--lego-red), var(--lego-yellow)); display: flex; justify-content: space-between; align-items: center; }
-  .modal-header h2 { margin: 0; font-size: 1.2rem; color: #111827; }
-  .close-btn { background: white; border: 0; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 18px; display: flex; align-items: center; justify-content: center; }
-  .modal-body { padding: 20px; display: grid; gap: 16px; }
-  .modal-image { width: 100%; border-radius: 14px; border: 1px solid var(--border); background: #f8fafc; padding: 10px; aspect-ratio: 4 / 3; object-fit: contain; }
-  .field label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; font-weight: 700; }
-  .row { display: flex; gap: 10px; flex-wrap: wrap; }
-  .grow { flex: 1 1 180px; }
+  .modal-content { background: white; border-radius: 20px; width: 100%; max-width: 450px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; }
+  .modal-header { padding: 15px; background: linear-gradient(90deg, var(--lego-red), var(--lego-yellow)); display: flex; justify-content: space-between; align-items: center; }
+  .modal-header h2 { margin: 0; font-size: 1.1rem; color: #111827; }
+  .close-btn { background: white; border: 0; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+  .modal-body { padding: 15px; display: grid; gap: 12px; }
+  .modal-image { width: 100%; border-radius: 12px; border: 1px solid var(--border); background: #f8fafc; padding: 8px; aspect-ratio: 4 / 3; object-fit: contain; }
+  .field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; font-weight: 700; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .grow { flex: 1 1 150px; }
   
   .status-ok { color: #0f766e; font-weight: 700; }
   .status-local { color: #92400e; font-weight: 700; }
   .status-saving { color: #1d4ed8; font-weight: 700; }
-  .toast { position: fixed; bottom: 24px; right: 24px; background: #1f2937; color: white; padding: 12px 20px; border-radius: 12px; font-size: 14px; font-weight: 700; box-shadow: 0 8px 24px rgba(0,0,0,.25); z-index: 999; opacity: 0; transform: translateY(12px); transition: opacity .25s, transform .25s; pointer-events: none; }
+  .toast { position: fixed; bottom: 20px; right: 20px; background: #1f2937; color: white; padding: 10px 16px; border-radius: 10px; font-size: 13px; font-weight: 700; box-shadow: 0 8px 24px rgba(0,0,0,.25); z-index: 999; opacity: 0; transform: translateY(10px); transition: opacity .25s, transform .25s; pointer-events: none; }
   .toast.show { opacity: 1; transform: translateY(0); }
-  .toast.error { background: #991b1b; }
   .sort-label { display: flex; flex-direction: column; gap: 4px; }
+
+  /* Mobile Specific Adjustments */
+  @media (max-width: 600px) {
+    .filter-toggle { display: flex; }
+    .controls { max-height: 0; opacity: 0; pointer-events: none; }
+    .controls.open { max-height: 500px; opacity: 1; pointer-events: auto; margin-top: 10px; }
+    .sort-label { width: 100%; }
+    .grow { width: 100%; }
+    h1 { font-size: 1.4rem; }
+    .grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
 <header>
   <div class="header-inner">
     <h1>My LEGO Collection</h1>
-    <div class="subtitle">Click any card to update status and notes.</div>
-    <div class="sync-note" id="syncNote">Sync: <span class="status-local">connecting...</span></div>
-    <div class="controls">
+    <div class="subtitle">Tap any card to update status and notes.</div>
+    
+    <button class="filter-toggle" id="filterToggle">
+      <span>🔍 Filter & Sort</span>
+    </button>
+
+    <div class="controls" id="controls">
       <label class="sort-label">
         <div class="hint">Theme</div>
         <select id="themeFilter"></select>
@@ -126,11 +147,11 @@
         <input id="searchBox" type="text" placeholder="Search set number, name, theme..." style="width:100%;">
       </label>
     </div>
+
     <div class="stats">
       <div class="pill" id="countPill">110 sets</div>
-      <div class="pill" id="piecesPill"></div>
-      <div class="pill" id="minifigsPill"></div>
       <div class="pill" id="completePill"></div>
+      <div class="pill" id="syncNote">Sync: <span class="status-local">...</span></div>
     </div>
   </div>
 </header>
@@ -148,7 +169,7 @@
     </div>
     <div class="modal-body">
       <img id="modalImage" class="modal-image" alt="" />
-      <div id="modalMeta" style="font-size:14px; color:var(--muted); line-height:1.45;"></div>
+      <div id="modalMeta" style="font-size:13px; color:var(--muted); line-height:1.4;"></div>
       <div class="row">
         <div class="fact grow">
           <span class="fact-label">Pieces</span>
@@ -173,7 +194,7 @@
       </div>
       <div class="row">
         <button class="button" id="saveBtn" type="button" style="flex:1;">Save changes</button>
-        <button class="button alt" id="clearBtn" type="button">Clear notes</button>
+        <button class="button alt" id="clearBtn" type="button">Clear</button>
       </div>
     </div>
   </div>
@@ -195,9 +216,9 @@ const statusFilter = document.getElementById("statusFilter");
 const sortSelect = document.getElementById("sortSelect");
 const searchBox = document.getElementById("searchBox");
 const countPill = document.getElementById("countPill");
-const piecesPill = document.getElementById("piecesPill");
-const minifigsPill = document.getElementById("minifigsPill");
 const completePill = document.getElementById("completePill");
+const filterToggle = document.getElementById("filterToggle");
+const controls = document.getElementById("controls");
 const modalOverlay = document.getElementById("modalOverlay");
 const modalImage = document.getElementById("modalImage");
 const modalTitle = document.getElementById("modalTitle");
@@ -265,14 +286,10 @@ function filteredData() {
 }
 
 function updateStats(items) {
-  countPill.textContent = items.length + " set" + (items.length === 1 ? "" : "s") + " shown";
-  const pieces = items.reduce((sum, s) => sum + (Number(s.pieces) || 0), 0);
-  const minifigs = items.reduce((sum, s) => sum + (Number(s.minifigs) || 0), 0);
-  piecesPill.textContent = pieces.toLocaleString() + " pieces";
-  minifigsPill.textContent = minifigs.toLocaleString() + " minifigs";
+  countPill.textContent = items.length + " sets";
   const complete = data.filter(s => s.status === "Complete").length;
   const missing = data.filter(s => s.status === "Missing/Broken pieces").length;
-  completePill.textContent = complete + " complete · " + missing + " missing/broken";
+  completePill.textContent = complete + " complete · " + missing + " missing";
 }
 
 function renderFilters() {
@@ -316,7 +333,7 @@ function render() {
         <div class="notes">' + (s.notes ? s.notes.replace(/</g, "&lt;").replace(/>/g, "&gt;") : '<span style="color:#9ca3af;font-style:italic;">No notes yet.</span>') + '</div> \
         <div class="actions"> \
           <a class="button-link" href="' + s.bricksetUrl + '" target="_blank" rel="noopener">View on Brickset</a> \
-          <span class="hint">Click to edit</span> \
+          <span class="hint">Tap to edit</span> \
         </div> \
       </div> \
     ';
@@ -347,17 +364,17 @@ function closeEditor() {
 }
 
 async function loadFromSheets() {
-  syncNote.innerHTML = "Sync: " + '<span class="status-saving">loading...</span>';
+  syncNote.innerHTML = "Sync: " + '<span class="status-saving">...</span>';
   try {
     const res = await fetch(SCRIPT_URL + "?action=get");
     const updates = await res.json();
     data = mergeUpdates(baseData(), updates);
-    syncNote.innerHTML = "Sync: " + '<span class="status-ok">active ✓</span>';
+    syncNote.innerHTML = "Sync: " + '<span class="status-ok">✓</span>';
     renderFilters();
     render();
   } catch (err) {
     console.error("Load error:", err);
-    syncNote.innerHTML = "Sync: " + '<span class="status-local">offline</span>';
+    syncNote.innerHTML = "Sync: " + '<span class="status-local">off</span>';
     data = baseData();
     renderFilters();
     render();
@@ -368,7 +385,7 @@ async function saveToSheets(id, status, notes) {
   saving = true;
   saveBtn.disabled = true;
   saveBtn.textContent = "Saving...";
-  syncNote.innerHTML = "Sync: " + '<span class="status-saving">saving...</span>';
+  syncNote.innerHTML = "Sync: " + '<span class="status-saving">...</span>';
   try {
     const body = new URLSearchParams({ action: "set", id, status, notes });
     const res = await fetch(SCRIPT_URL, { method: "POST", body });
@@ -377,13 +394,13 @@ async function saveToSheets(id, status, notes) {
       const s = data.find(x => x.id === id);
       if (s) { s.status = status; s.notes = notes; }
       render();
-      syncNote.innerHTML = "Sync: " + '<span class="status-ok">active ✓</span>';
+      syncNote.innerHTML = "Sync: " + '<span class="status-ok">✓</span>';
       showToast("Saved! ✓");
       closeEditor();
     } else { throw new Error(json.error); }
   } catch (err) {
     console.error("Save error:", err);
-    syncNote.innerHTML = "Sync: " + '<span class="status-local">failed</span>';
+    syncNote.innerHTML = "Sync: " + '<span class="status-local">err</span>';
     showToast("Save failed.", true);
   } finally {
     saving = false;
@@ -391,6 +408,11 @@ async function saveToSheets(id, status, notes) {
     saveBtn.textContent = "Save changes";
   }
 }
+
+filterToggle.addEventListener("click", () => {
+  controls.classList.toggle("open");
+  filterToggle.innerHTML = controls.classList.contains("open") ? "<span>▲ Hide Filters</span>" : "<span>🔍 Filter & Sort</span>";
+});
 
 saveBtn.addEventListener("click", () => { if (selectedId && !saving) saveToSheets(selectedId, modalStatus.value, modalNotes.value); });
 clearBtn.addEventListener("click", () => { modalNotes.value = ""; });
