@@ -97,10 +97,6 @@
     color: var(--text);
     border: 1px solid var(--border);
   }
-  .button.danger {
-    background: var(--lego-red);
-    color: white;
-  }
   .stats {
     display: flex;
     gap: 10px;
@@ -307,11 +303,6 @@
   }
   .grow {
     flex: 1 1 180px;
-  }
-  .footer-note {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.45;
   }
   .status-ok { color: #0f766e; font-weight: 700; }
   .status-local { color: #92400e; font-weight: 700; }
@@ -534,7 +525,7 @@ function filteredData() {
   let items = data.filter(s => {
     const matchesTheme = theme === "all" || s.theme === theme;
     const matchesStatus = status === "all" || s.status === status;
-    const haystack = `${s.theme} ${s.num} ${s.name}`.toLowerCase();
+    const haystack = (s.theme + " " + s.num + " " + s.name).toLowerCase();
     const matchesSearch = !q || haystack.includes(q);
     return matchesTheme && matchesStatus && matchesSearch;
   });
@@ -557,14 +548,14 @@ function filteredData() {
 }
 
 function updateStats(items) {
-  countPill.textContent = `${items.length} set${items.length === 1 ? "" : "s"} shown`;
+  countPill.textContent = items.length + " set" + (items.length === 1 ? "" : "s") + " shown";
   const pieces = items.reduce((sum, s) => sum + (Number(s.pieces) || 0), 0);
   const minifigs = items.reduce((sum, s) => sum + (Number(s.minifigs) || 0), 0);
-  piecesPill.textContent = `${pieces.toLocaleString()} pieces`;
-  minifigsPill.textContent = `${minifigs.toLocaleString()} minifigs`;
+  piecesPill.textContent = pieces.toLocaleString() + " pieces";
+  minifigsPill.textContent = minifigs.toLocaleString() + " minifigs";
   const complete = data.filter(s => s.status === "Complete").length;
   const inProgress = data.filter(s => s.status === "In progress").length;
-  completePill.textContent = `${complete} complete · ${inProgress} in progress`;
+  completePill.textContent = complete + " complete · " + inProgress + " in progress";
 }
 
 function renderFilters() {
@@ -573,7 +564,7 @@ function renderFilters() {
   );
   const current = themeFilter.value;
   themeFilter.innerHTML = themes.map(t =>
-    `<option value="${t}"${t === current ? " selected" : ""}>${t === "all" ? "All themes" : t}</option>`
+    '<option value="' + t + '"' + (t === current ? " selected" : "") + '>' + (t === "all" ? "All themes" : t) + '</option>'
   ).join("");
 }
 
@@ -583,7 +574,7 @@ function render() {
   grid.innerHTML = "";
 
   if (!items.length) {
-    grid.innerHTML = `<div class="empty">No sets match those filters.</div>`;
+    grid.innerHTML = '<div class="empty">No sets match those filters.</div>';
     return;
   }
 
@@ -593,32 +584,32 @@ function render() {
     card.dataset.id = s.id;
     const safeNum = s.num.replace(/"/g, "&quot;");
     const safeName = s.name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    card.innerHTML = `
-      <div class="image-wrap">
-        <span class="theme-tag" style="background:${s.themeColor}">${s.theme}</span>
-        <span class="status-tag" style="background:${statusBadgeColor(s.status)}">${s.status}</span>
-        <img src="${s.img}" alt="${safeNum} ${safeName}" loading="lazy"
-          onerror="this.style.display=\'none\'; this.parentElement.insertAdjacentHTML(\'beforeend\',\'<div style=&quot;padding:20px;text-align:center;color:#6b7280;font-weight:bold;&quot;>Image unavailable<br>${safeNum}</div>\');">
-      </div>
-      <div class="card-body" style="border-top-color:${s.themeColor};">
-        <div class="title">${s.theme} - ${s.num} - ${safeName} (${s.year})</div>
-        <div class="facts">
-          <div class="fact">
-            <span class="fact-label">Pieces</span>
-            <span class="fact-value">${Number(s.pieces).toLocaleString()}</span>
-          </div>
-          <div class="fact">
-            <span class="fact-label">Minifigs</span>
-            <span class="fact-value">${Number(s.minifigs).toLocaleString()}</span>
-          </div>
-        </div>
-        <div class="notes">${s.notes ? s.notes.replace(/</g, "&lt;").replace(/>/g, "&gt;") : '<span style="color:#9ca3af;font-style:italic;">No notes yet.</span>'}</div>
-        <div class="actions">
-          <a class="button-link" href="${s.bricksetUrl}" target="_blank" rel="noopener">View on Brickset</a>
-          <span class="hint">Click to edit</span>
-        </div>
-      </div>
-    `;
+    card.innerHTML = ' \
+      <div class="image-wrap"> \
+        <span class="theme-tag" style="background:' + s.themeColor + '">' + s.theme + '</span> \
+        <span class="status-tag" style="background:' + statusBadgeColor(s.status) + '">' + s.status + '</span> \
+        <img src="' + s.img + '" alt="' + safeNum + ' ' + safeName + '" loading="lazy" \
+          onerror="this.style.display=\'none\'; this.parentElement.insertAdjacentHTML(\'beforeend\',\'<div style=&quot;padding:20px;text-align:center;color:#6b7280;font-weight:bold;&quot;>Image unavailable<br>' + safeNum + '</div>\');"> \
+      </div> \
+      <div class="card-body" style="border-top-color:' + s.themeColor + ';"> \
+        <div class="title">' + s.theme + ' - ' + s.num + ' - ' + safeName + ' (' + s.year + ')</div> \
+        <div class="facts"> \
+          <div class="fact"> \
+            <span class="fact-label">Pieces</span> \
+            <span class="fact-value">' + Number(s.pieces).toLocaleString() + '</span> \
+          </div> \
+          <div class="fact"> \
+            <span class="fact-label">Minifigs</span> \
+            <span class="fact-value">' + Number(s.minifigs).toLocaleString() + '</span> \
+          </div> \
+        </div> \
+        <div class="notes">' + (s.notes ? s.notes.replace(/</g, "&lt;").replace(/>/g, "&gt;") : '<span style="color:#9ca3af;font-style:italic;">No notes yet.</span>') + '</div> \
+        <div class="actions"> \
+          <a class="button-link" href="' + s.bricksetUrl + '" target="_blank" rel="noopener">View on Brickset</a> \
+          <span class="hint">Click to edit</span> \
+        </div> \
+      </div> \
+    ';
     card.addEventListener("click", (e) => {
       if (e.target.closest("a")) return;
       selectSet(s.id);
@@ -638,9 +629,9 @@ function selectSet(id) {
   });
 
   panelImage.src = s.img;
-  panelImage.alt = `${s.num} ${s.name}`;
-  panelTitle.textContent = `${s.theme} - ${s.num} - ${s.name} (${s.year})`;
-  panelMeta.textContent = `${s.theme}${s.subtheme ? " · " + s.subtheme : ""} · ${s.year}`;
+  panelImage.alt = s.num + " " + s.name;
+  panelTitle.textContent = s.theme + " - " + s.num + " - " + s.name + " (" + s.year + ")";
+  panelMeta.textContent = s.theme + (s.subtheme ? " · " + s.subtheme : "") + " · " + s.year;
   panelPieces.textContent = Number(s.pieces).toLocaleString();
   panelMinifigs.textContent = Number(s.minifigs).toLocaleString();
   panelStatus.value = s.status || "Not started";
@@ -662,24 +653,24 @@ function setSyncStatus(html) {
 
 async function loadFromSheets() {
   if (!isConfigured) {
-    setSyncStatus(\'<span class="status-local">local only — add your Script URL to enable shared sync</span>\');
+    setSyncStatus('<span class="status-local">local only — add your Script URL to enable shared sync</span>');
     data = baseData();
     renderFilters();
     render();
     return;
   }
-  setSyncStatus(\'<span class="status-saving">loading from Google Sheets...</span>\');
+  setSyncStatus('<span class="status-saving">loading from Google Sheets...</span>');
   try {
     const res = await fetch(SCRIPT_URL + "?action=get");
     const updates = await res.json();
     data = mergeUpdates(baseData(), updates);
-    setSyncStatus(\'<span class="status-ok">Google Sheets sync active ✓</span>\');
+    setSyncStatus('<span class="status-ok">Google Sheets sync active ✓</span>');
     renderFilters();
     render();
     if (selectedId) selectSet(selectedId);
   } catch (err) {
     console.error("Load error:", err);
-    setSyncStatus(\'<span class="status-local">could not reach Google Sheets — showing local data</span>\');
+    setSyncStatus('<span class="status-local">could not reach Google Sheets — showing local data</span>');
     data = baseData();
     renderFilters();
     render();
@@ -700,7 +691,7 @@ async function saveToSheets(id, status, notes) {
   saving = true;
   saveBtn.disabled = true;
   saveBtn.textContent = "Saving...";
-  setSyncStatus(\'<span class="status-saving">saving...</span>\');
+  setSyncStatus('<span class="status-saving">saving...</span>');
 
   try {
     const body = new URLSearchParams({ action: "set", id, status, notes });
@@ -711,14 +702,14 @@ async function saveToSheets(id, status, notes) {
       if (s) { s.status = status; s.notes = notes; }
       render();
       selectSet(id);
-      setSyncStatus(\'<span class="status-ok">Google Sheets sync active ✓</span>\');
+      setSyncStatus('<span class="status-ok">Google Sheets sync active ✓</span>');
       showToast("Saved! ✓");
     } else {
       throw new Error(json.error || "Unknown error");
     }
   } catch (err) {
     console.error("Save error:", err);
-    setSyncStatus(\'<span class="status-local">save failed — check your Script URL</span>\');
+    setSyncStatus('<span class="status-local">save failed — check your Script URL</span>');
     showToast("Save failed. Check your Script URL.", true);
   } finally {
     saving = false;
